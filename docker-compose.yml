@@ -1,0 +1,19 @@
+version: '4.0'
+networks:
+  graphql:
+    driver: bridge
+services:
+  database:
+    build: ./mongodb_rs
+    networks:
+      - graphql     
+    restart: always
+    container_name: database_graphql
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: graphql
+      MONGO_INITDB_ROOT_PASSWORD: Gp4fhQ1
+      MONGO_INITDB_DATABASE: graphql
+      MONGO_REPLICA_HOST: localhost
+      MONGO_REPLICA_PORT: 27017    
+    ports:
+      - 27017:27017
