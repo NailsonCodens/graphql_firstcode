@@ -6,14 +6,15 @@ import { CustomerModel } from "../dtos/models/customer-model";
 
 @Resolver(() => UserModal)
 export class UsersResolvers{
-    @Query(() => String)
+    @Query(returns => UserModal)
     async helloWord(){
-        return [
-            {
-                name: "teste",
-                email: "adssadsa"      
-            }
-        ];
+        const teste = {
+            clientId: "sadsad",
+            name: "teste",
+            email: "adssadsa"      
+        };
+
+        return teste;
     }
 
     @Mutation(() => UserModal)
@@ -33,7 +34,8 @@ export class UsersResolvers{
         console.log(user);
 
         return {
-            name: 'Teste'
+            name: 'Teste',
+            user: 'Bobão'
         }
     }
 

@@ -7,6 +7,8 @@ import { UsersResolvers } from "./resolvers/user-resolvers";
 async function boostrap (){
     const schema = await buildSchema({
         resolvers: [UsersResolvers],
+        emitSchemaFile: true,
+        validate: { forbidUnknownValues: false }        
     });
 
     const server = new ApolloServer({

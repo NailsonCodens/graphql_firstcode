@@ -4,4 +4,7 @@ import { Field, ObjectType } from "type-graphql";
 export class CustomerModel{
     @Field()
     name: string;
+
+    @Field()
+    user: string;
 };
