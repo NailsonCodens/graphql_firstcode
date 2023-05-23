@@ -4,6 +4,7 @@ import { CreateUserInput } from "../dtos/inputs/create-user-input";
 import { UserModal } from "../dtos/models/user-model";
 import { CustomerModel } from "../dtos/models/customer-model";
 import {Schema, connect, model} from 'mongoose'
+import { UpdateUserInput } from "../dtos/inputs/update-user-input";
 
 interface IUser {
     name: string;
@@ -21,6 +22,11 @@ const User = model<IUser>('User', userSchema)
 
 @Resolver(() => UserModal)
 export class UsersResolvers{
+    constructor(){
+        connect("mongodb://graphql:Gp4fhQ1@localhost:27017/graphql?directConnection=true&authSource=admin");
+    }
+
+
     @Query(returns => UserModal)
     async helloWord(){
         const teste = {
@@ -36,8 +42,6 @@ export class UsersResolvers{
     async createUser(@Arg("data") data: CreateUserInput){
         console.log('asdsa');
 
-        connect("mongodb://graphql:Gp4fhQ1@localhost:27017/graphql?directConnection=true&authSource=admin");
-
 
         const user = {
             customerId: data.customerId,
@@ -46,8 +50,8 @@ export class UsersResolvers{
         }
 
         const teste = new User({
-            name: 'Bill',
-            email: 'bill@initech.com',
+            name: data.name,
+            email: data.email,
             age: 22
           });
           await teste.save();
@@ -66,6 +70,17 @@ export class UsersResolvers{
             name: 'Teste',
             user: 'Bobão'
         }
+    }
+
+    @Mutation(() => UserModal)
+    async updateUser(@Arg('data') data: UpdateUserInput){
+        const {id} = data;
+
+        const user = await User.findByIdAndUpdate(id, data); 
+
+        const userUpdated = await User.findById(id);
+
+        return userUpdated;
     }
 
 };

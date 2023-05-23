@@ -16,15 +16,23 @@ type CustomerModel {
 
 type Mutation {
   createUser(data: CreateUserInput!): UserModal!
+  updateUser(data: UpdateUserInput!): UserModal!
 }
 
 type Query {
   helloWord: UserModal!
 }
 
+input UpdateUserInput {
+  email: String!
+  id: String!
+  name: String!
+}
+
 type UserModal {
   customer: CustomerModel!
   customerId: String!
   email: String!
+  id: String!
   name: String!
 }
